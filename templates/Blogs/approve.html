@@ -1,0 +1,37 @@
+{% extends 'admin_dashboard/sidebar_admin.html' %}
+{% block dashboard_content  %}
+
+    <h2>Pending Blog Approvals</h2>
+
+ {% if blogs %}
+    <div class="row">
+        {% for blog in blogs %}
+            <div class="col-md-12 mb-4">
+                <div class="card shadow">
+                    <img src="{{ url_for('static', filename='uploads/' + blog[5]) }}"
+                         class="card-img-top"
+                         alt="Blog Image"
+                         style="max-height: 400px; object-fit: cover;">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ blog[1] }}</h3>
+                        <p class="text-muted">By <strong>{{ blog[3] }}</strong> ({{ blog[4] }})</p>
+                        <hr>
+                        <p class="card-text" style="white-space: pre-wrap;">{{ blog[2] }}</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="{{ url_for('approve', id=blog[0]) }}" class="btn btn-success btn-sm">Approve</a>
+                        <a href="{{ url_for('delete', id=blog[0]) }}" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">No pending blog posts to approve.</div>
+{% endif %}
+
+
+   
+
+
+{% endblock %}

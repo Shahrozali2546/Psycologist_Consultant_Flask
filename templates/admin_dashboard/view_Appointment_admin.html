@@ -1,0 +1,36 @@
+{% extends 'admin_dashboard/sidebar_admin.html' %}
+{% block dashboard_content  %}
+
+
+<h3>Appointments</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Patient Name</th>
+      <th>Contact</th>
+      <th>Doctor Name</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Booked At</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for appt in appointments %}
+    <tr>
+      <td>{{ appt['patient_name'] }}</td>
+      <td>{{ appt['contact'] }}</td>
+      <td>{{ appt['doctor_name'] }}</td>
+      <td>{{ appt['date'] }}</td>
+      <td>{{ appt['start_time'] }} - {{ appt['end_time'] }}</td>
+      <td>{{ appt['booked_at'] }}</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="6" class="text-center">No appointments found</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock %}

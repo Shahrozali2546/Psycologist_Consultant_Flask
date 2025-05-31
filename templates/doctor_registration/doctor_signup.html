@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-5" style="max-width: 500px;">
+    <div class="card shadow">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">Doctor Signup</h2>
+
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input name="name" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input name="username" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input name="doc_email" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Qualification</label>
+                    <input name="qualification" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">University</label>
+                    <input name="university" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">WhatsApp</label>
+                    <input name="whatsapp" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">CNIC</label>
+                    <input name="cnic" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Signup</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

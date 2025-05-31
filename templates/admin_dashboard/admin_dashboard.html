@@ -1,0 +1,113 @@
+{% extends 'admin_dashboard/sidebar_admin.html' %}
+{% block dashboard_content  %}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">Admin Dashboard</h1>
+        
+    </div>
+
+    <h3 class="mb-3">Doctors List</h3>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Qualification</th>
+                    <th>WhatsApp</th>
+                    <th>CNIC</th>
+                    <th>University</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doc in doctors %}
+            <tr>
+                <td>{{ doc['id'] }}</td>
+                <td>{{ doc['name'] }}</td>
+                <td>{{ doc['username'] }}</td>
+                <td>{{ doc['doc_email'] }}</td>
+                
+                <td>
+                    <span class="badge {% if doc['status'] == 'active' %}bg-success{% else %}bg-secondary{% endif %}">
+                        {{ doc['status'] }}
+                    </span>
+                </td>
+                
+
+                <td>{{ doc['qualification'] }}</td>
+                <td>{{ doc['whatsapp'] }}</td>
+                <td>{{ doc['cnic'] }}</td>
+                <td>{{ doc['university'] }}</td>
+                <td>
+                    {% if doc['status'] != 'active' %}
+                    <a href="/admin/approve/{{ doc['id'] }}" class="btn btn-sm btn-success">Approve</a>
+                    {% else %}
+                    <a href="/admin/deactivate/{{ doc['id'] }}" class="btn btn-sm btn-warning">Deactivate</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+            
+        </table>
+    </div>
+</div>
+
+
+ <!-- Patients List -->
+    <div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">Admin Dashboard</h1>
+       
+    </div>
+
+    <h3 class="mb-3">Patient List</h3>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Status</th>
+                    <th>Email</th>
+                   
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                  <td>{{ patient.id }}</td>
+<td>{{ patient.name }}</td>
+<td>{{ patient.username }}</td>
+<td>
+    <span class="badge {% if patient.status == 'active' %}bg-success{% else %}bg-secondary{% endif %}">
+        {{ patient.status }}
+    </span>
+</td>
+<td>{{ patient.email }}</td>
+
+<td>
+    {% if patient.status != 'active' %}
+    <a href="/admin/approve_patient/{{ patient.id }}" class="btn btn-sm btn-success">Activate</a>
+    {% else %}
+    <a href="/admin/deactivate_patient/{{ patient.id }}" class="btn btn-sm btn-warning">Deactivate</a>
+    {% endif %}
+</td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

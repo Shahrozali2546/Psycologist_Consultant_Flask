@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+
+    <div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center">
+        <div class="card shadow-sm text-center p-4" style="max-width: 500px; width: 100%;">
+            <div class="card-body">
+                <h1 class="card-title text-success mb-3">{{ message }}</h1>
+                <p class="card-text mb-4">Your appointment has been successfully booked.</p>
+                <a href="/" class="btn btn-primary">Go to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <h2>{{ message }}</h2>
+
+{% if meet_link %}
+    <p>Your Google Meet link for the appointment is:</p>
+    <a href="{{ meet_link }}" target="_blank">{{ meet_link }}</a>
+    <p>The meeting will start at the scheduled time.</p>
+{% endif %}
+
+    
+
+    {% endblock %}

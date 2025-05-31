@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-5">
+  <h2 class="mb-4">Welcome to your dashboard</h2>
+  <p><strong>User ID:</strong> {{ session['user_id'] }}</p>
+  <p><strong>Role:</strong> {{ session['role'] }}</p>
+
+  <h3 class="mt-5 mb-3">Your Booked Appointments</h3>
+
+  {% if appointments %}
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>Doctor</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+          <th>Payment Status</th>
+          <th>Payment Info</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for appt in appointments %}
+        <tr>
+          <td>{{ appt['doctor_name'] }}</td>
+          <td>{{ appt['date'] }}</td>
+          <td>{{ appt['time'] }}</td>
+          <td>
+            {% if appt['status'] == 'active' %}
+              <span class="badge bg-success">{{ appt['status'] }}</span>
+            {% elif appt['status'] == 'pending' %}
+              <span class="badge bg-warning text-dark">{{ appt['status'] }}</span>
+            {% else %}
+              <span class="badge bg-secondary">{{ appt['status'] }}</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if appt['payment_status'] == 'paid' %}
+              <span class="badge bg-success">{{ appt['payment_status'] }}</span>
+            {% else %}
+              <span class="badge bg-danger">{{ appt['payment_status'] }}</span>
+            {% endif %}
+          </td>
+          <td>{{ appt['payment_info'] or 'N/A' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="alert alert-info" role="alert">
+    You have no appointments yet.
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

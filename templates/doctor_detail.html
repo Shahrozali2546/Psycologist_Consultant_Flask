@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+<div class="container my-5">
+  <div class="row">
+    <!-- Profile Sidebar -->
+    <div class="col-md-4 text-center">
+      <div class="text-center mb-3">
+  <img src="{{ url_for('static', filename='uploads/' ~ doctor.image) }}"
+       class="rounded-circle shadow"
+       style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #0d6efd;">
+</div>
+
+      <h4 class="mb-1">{{ doctor.name }}</h4>
+      <p class="text-muted">{{ doctor.specialization }}</p>
+    </div>
+
+    <!-- Main Info -->
+    <div class="col-md-8">
+      
+    
+      <h5>About Me</h5>
+      <p>{{ doctor.description or "No description available." }}</p>
+
+</div>
+  </div>
+</div>
+
+{% endblock %}

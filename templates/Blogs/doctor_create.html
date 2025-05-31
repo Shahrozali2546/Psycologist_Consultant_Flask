@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+  <div class="card p-4 shadow-lg" style="width: 100%; max-width: 500px; border-radius: 12px;">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">New Blog Post</h2>
+      <p class="text-muted">Doctor's Portal</p>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data" novalidate>
+      <div class="mb-3">
+        <label for="title" class="form-label fw-semibold">Title</label>
+        <input type="text" class="form-control form-control-lg" id="title" name="title" placeholder="Blog title here" required>
+      </div>
+     <div class="mb-3">
+        <label for="author" class="form-label fw-semibold">Author</label>
+        <input type="text" id="author" name="author" class="form-control" placeholder="Enter your name" required>
+        </div>
+
+      <div class="mb-3">
+        <label for="content" class="form-label fw-semibold">Content</label>
+        <textarea class="form-control" id="content" name="content" rows="6" placeholder="Write your blog content..." required></textarea>
+      </div>
+
+      <div class="mb-4">
+        <label for="image" class="form-label fw-semibold">Select Image</label>
+        <input class="form-control" type="file" id="image" name="image" accept="image/*" required>
+      </div>
+
+      <button type="submit" class="btn btn-gradient w-100 fw-bold py-2 rounded-3">
+        Submit Blog
+      </button>
+    </form>
+  </div>
+</div>
+
+<style>
+  .btn-gradient {
+    background: linear-gradient(45deg, #4a90e2, #007bff);
+    color: white;
+    border: none;
+    transition: background 0.3s ease;
+  }
+  .btn-gradient:hover {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'doctor_dashboard/doctor_sidebar.html' %}
+{% block title %}Doctor Dashboard{% endblock %}
+
+{% block body %}
+<div class="container py-4">
+  <div class="mb-4">
+    <h2 class="fw-bold">👨‍⚕️ Welcome, Dr. {{ doctor.name }}</h2>
+    <p class="text-muted">Manage your Profile below.</p>
+  </div>
+
+
+
+  <!-- Profile Update Form -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-primary text-white fw-semibold">👤 Update Profile</div>
+    <div class="card-body">
+      <form method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="form_type" value="update_profile">
+        <div class="mb-3">
+          <label class="form-label">Name</label>
+          <input type="text" name="name" class="form-control" value="{{ doctor.name or '' }}" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Specialization</label>
+          <input type="text" name="specialization" class="form-control" value="{{ doctor.specialization or '' }}" required>
+        </div>
+  <div class="mb-3">
+  <label class="form-label fs-5">About Me</label>
+  <textarea name="description" class="form-control" rows="6">{{ doctor.description or '' }}</textarea>
+</div>
+
+
+        <div class="mb-3">
+          <label class="form-label">Profile Image</label>
+          <input type="file" name="image" class="form-control">
+        </div>
+        <div class="text-end">
+          <button class="btn btn-primary px-4">💾 Update Profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

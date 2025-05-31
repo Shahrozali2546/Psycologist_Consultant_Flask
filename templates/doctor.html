@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-info">
+      {% for message in messages %}
+        <div>{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<div class="container mt-4">
+  <h2 class="mb-4">Available Psychologist Doctors</h2>
+
+  {% for doctor in doctors %}
+  <div class="card mb-4 shadow-sm p-5">
+    <div class="row align-items-center">
+      <!-- Doctor Image -->
+      <div class="col-md-2 text-center">
+        {% if doctor.image %}
+          <img src="{{ url_for('static', filename='uploads/' ~ doctor.image) }}" class="rounded-circle img-fluid" style="width: 150px; height: 150px; object-fit: cover;">
+        {% else %}
+          <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            No Image
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Doctor Info -->
+      <div class="col-md-7">
+        <h5 class="mb-1">
+          {{ doctor.name if doctor.name else 'No Name' }}
+        </h5>
+        <p class="text-muted mb-0">
+          <strong>Specialization:</strong> {{ doctor.specialization if doctor.specialization else 'Not specified' }}
+        </p>
+      </div>
+
+      <!-- Buttons -->
+      <div class="col-md-3 text-end">
+        <a href="/doctor/{{ doctor.id }}" class="btn btn-primary mb-2 w-100">View profile</a>
+        <a href="/video-call/{{ doctor.id }}" class="btn btn-outline-success w-100">Video Call</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
+
+{% endblock %}

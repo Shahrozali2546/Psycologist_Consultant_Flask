@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-5">
+  <h3>Edit Slot</h3>
+  <form method="POST">
+    <div class="mb-3">
+      <label>Date</label>
+      <input type="date" name="date" class="form-control" value="{{ slot[1] }}" required>
+    </div>
+    <div class="mb-3">
+      <label>Start Time</label>
+      <input type="time" name="start_time" class="form-control" value="{{ slot[2] }}" required>
+    </div>
+    <div class="mb-3">
+      <label>End Time</label>
+      <input type="time" name="end_time" class="form-control" value="{{ slot[3] }}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Slot</button>
+    <a href="/doctor/dashboard" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+
+{% endblock %}

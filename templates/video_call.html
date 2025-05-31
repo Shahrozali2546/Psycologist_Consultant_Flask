@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+  <div class=" p-5 rounded shadow " style="max-width: 800px; width: 100%; min-height: 600px; background-color: #f0f4f4;">
+
+    <h2 class="mb-5 text-dark">Get Confirmed Appointment Online</h2>
+
+    <!-- Doctor Availability with white bg and rounded corners -->
+    <div class="alert alert-success bg-white rounded mb-5 shadow-sm p-4">
+      <h5><i class="bi bi-calendar-check "></i> Video Consultation Availability</h5>
+      <ul class="mb-0">
+        {% for (date, day), times in availability_summary.items() %}
+          <li><strong>{{ day }} ({{ date }}):</strong>
+            {% for time in times %}
+              {{ time[0] }} to {{ time[1] }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+          </li>
+        {% endfor %}
+      </ul>
+    <p class="p-2">Online</p>
+    </div>
+
+    <!-- Booking Form -->
+    <form method="POST" action="{{ url_for('book_appointment', slot_id=0) }}" id="slotForm">
+
+      <div class="mb-4">
+        <label for="slot" class="form-label fw-bold">Select Date & Time</label>
+        <select name="slot_id" class="form-select"
+                onchange="document.getElementById('slotForm').action = '/book/' + this.value;">
+          {% for slot in slots %}
+            {% if slot['doctor_id'] != session.get('user_id') %}
+              <option value="{{ slot['id'] }}">{{ slot['date'] }} ({{ slot['start_time'] }} - {{ slot['end_time'] }})</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Row with two inputs side by side -->
+      <div class="row mb-3">
+        <div class="col">
+          <label for="patient_name" class="form-label fw-bold">Patient Name</label>
+          <input type="text" name="patient_name" id="patient_name" placeholder="Add Patient Name" class="form-control" required>
+        </div>
+        <div class="col">
+          <label for="contact" class="form-label fw-bold">Contact Number</label>
+          <input type="text" name="contact" id="contact" placeholder="Add Phone Number" class="form-control" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-success w-100 fw-bold">Book Video Consultation</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

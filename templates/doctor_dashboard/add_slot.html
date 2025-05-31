@@ -1,0 +1,37 @@
+{% extends 'doctor_dashboard/doctor_sidebar.html' %}
+
+
+{% block body %}
+<div class="container py-4">
+  <div class="mb-4">
+   
+    <p class="text-muted">Manage your availability.</p>
+  </div>
+
+
+  <!-- Add Slot Form -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-success text-white fw-semibold">🕒 Add Available Slot</div>
+    <div class="card-body">
+      <form method="POST" class="row g-3" novalidate>
+        <input type="hidden" name="form_type" value="add_slot">
+        <div class="col-md-4">
+          <label for="date" class="form-label">Date</label>
+          <input type="date" id="date" name="date" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <label for="start_time" class="form-label">Start Time</label>
+          <input type="time" id="start_time" name="start_time" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <label for="end_time" class="form-label">End Time</label>
+          <input type="time" id="end_time" name="end_time" class="form-control" required>
+        </div>
+        <div class="col-12 text-end">
+          <button type="submit" class="btn btn-success px-4">➕ Add Slot</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {% endblock %}

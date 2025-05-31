@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-5" style="max-width: 600px;">
+  <div class="card shadow-sm rounded">
+    <div class="card-header bg-dark text-white text-center">
+      <h3 class="mb-0">Admin: Create Blog</h3>
+      <small class="opacity-75">Publish your content</small>
+    </div>
+    <div class="card-body bg-light">
+      <form method="POST" enctype="multipart/form-data" novalidate>
+        <div class="mb-4">
+          <label for="title" class="form-label fw-semibold">Blog Title</label>
+          <input type="text" class="form-control form-control-lg" id="title" name="title" placeholder="Enter blog title" required>
+        </div>
+
+        <div class="mb-4">
+          <label for="content" class="form-label fw-semibold">Content</label>
+          <textarea class="form-control" id="content" name="content" rows="7" placeholder="Write your content here..." required></textarea>
+        </div>
+
+        <div class="mb-4">
+        <label for="author" class="form-label fw-semibold">Author</label>
+        <input type="text" id="author" name="author" class="form-control" placeholder="Enter your name" required>
+        </div>
+
+        <div class="mb-4">
+          <label for="image" class="form-label fw-semibold">Upload Image</label>
+          <input class="form-control" type="file" id="image" name="image" accept="image/*" required>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100 fw-bold py-2">Publish Blog</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="d-flex">
+
+    <!-- Sidebar -->
+    <nav class="flex-column flex-shrink-0 p-3 bg-dark text-white" style="width: 250px; min-height: 100vh;">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <span class="fs-4">🏥 Doctor Panel</span>
+      </a>
+      <hr class="text-white" />
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="{{ url_for('doctor_dashboard') }}" class="nav-link {% if request.endpoint == 'doctor_dashboard' %}active{% else %}text-white{% endif %}">
+            Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url_for('doctor_slot_view') }}" class="nav-link {% if request.endpoint == 'doctor_slot_view' %}active{% else %}text-white{% endif %}">
+            Slot View 
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url_for('doctor_appointment') }}" class="nav-link {% if request.endpoint == 'doctor_appointment' %}active{% else %}text-white{% endif %}">
+            Appointment View
+          </a>
+        </li>
+       <li class="nav-item">
+          <a href="{{ url_for('add_slot') }}" class="nav-link {% if request.endpoint == 'add_slot' %}active{% else %}text-white{% endif %}">
+          Availability  Add Slot 
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url_for('doctor_create') }}" class="nav-link {% if request.endpoint == 'doctor_create' %}active{% else %}text-white{% endif %}">
+            Create Blogs
+          </a>
+        </li>
+        
+        <li>
+          <a href="{{ url_for('logout') }}" class="nav-link text-white">
+            Logout
+          </a>
+        </li>
+      </ul>
+      <hr class="text-white" />
+      <div class="text-center small">&copy; 2025 Your Clinic</div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="flex-grow-1 p-4">
+      {% block body %}
+      {% endblock %}
+    </main>
+
+  </div>
+
+ 
+  {% endblock %}
