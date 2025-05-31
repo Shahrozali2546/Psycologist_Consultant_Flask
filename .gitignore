@@ -1,5 +1,58 @@
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*.pyc
-.env
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+.Python
+
+# Flask instance folder
 instance/
+uploads/
+.env
 .env.*
+*.env
+
+# Flask cache files
+*.pyo
+*.pyd
+
+# Editor and OS files
+*.swp
+.DS_Store
+Thumbs.db
+
+# Testing
+.coverage
+.tox/
+.nox/
+.pytest_cache/
+htmlcov/
+
+# Migrations
+migrations/
+
+# Logs
+*.log
+logs/
+
+# Static image uploads (optional - you already included)
+static/images/
+static/uploads/
+
+# VS Code and JetBrains IDEs
+.vscode/
+.idea/
+
+# Database files
+*.sqlite3
+*.db
+
+# Dist and build folders (in case you're using setup.py or packaging)
+build/
+dist/
+*.egg-info/
