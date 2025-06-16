@@ -29,6 +29,12 @@
       <input type="text" name="specialization" class="form-control" value="{{ doctor.university or '' }}" required>
     </div>
 
+  <div class="mb-3">
+    <label class="form-label">Video Consultation Fees (PKR) </label>
+    <input type="number" name="fees" class="form-control" value="{{ doctor.fees or '' }}" min="0" required>
+  </div>
+
+
     <div class="mb-3">
       <label class="form-label">Experience (in years)</label>
       <input type="number" name="experience" class="form-control" value="{{ doctor.experience or '' }}" min="0" required>
