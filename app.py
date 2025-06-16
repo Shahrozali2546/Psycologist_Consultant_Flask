@@ -1166,6 +1166,8 @@ def doctor_appointment():
     if not session.get('is_doctor'):
         return redirect('/doctor/login')
 
+    doctor_id = session.get('user_id')  # Get current logged-in doctor ID
+
     with get_db_connection() as conn:
         with conn.cursor(dictionary=True) as c:
             c.execute("""
@@ -1183,11 +1185,13 @@ def doctor_appointment():
                 FROM appointments a
                 JOIN availability s ON a.slot_id = s.id
                 JOIN users u ON s.doctor_id = u.id
+                WHERE u.id = %s
                 ORDER BY a.booked_at DESC
-            """)
+            """, (doctor_id,))
             appointments = c.fetchall()
 
     return render_template('doctor_dashboard/view_appointment.html', appointments=appointments)
+
 
 
 @app.route('/logout')
