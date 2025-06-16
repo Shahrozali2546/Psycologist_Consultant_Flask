@@ -683,6 +683,7 @@ def doctor():
                     u.specialization,
                     u.image,
                     u.experience,
+                    u.fees,
                     COUNT(r.id) AS review_count,
                     ROUND(AVG(r.rating), 1) AS avg_satisfaction,
                     ROUND((AVG(r.rating) / 5) * 100, 0) AS satisfaction_percent
@@ -710,7 +711,7 @@ def doctor_detail(doc_id):
             c.execute("""
                 SELECT 
                     u.id, u.name, u.specialization, u.image, u.description,
-                    u.experience, u.university,
+                    u.experience, u.university,u.fees,
                     COUNT(r.id) AS review_count,
                     ROUND(AVG(r.rating), 1) AS avg_satisfaction,
                     ROUND((AVG(r.rating) / 5) * 100, 0) AS satisfaction_percent
@@ -829,13 +830,19 @@ def to_12hour(time_str):
 
 @app.route('/video-call/<int:doc_id>', methods=["GET", "POST"])
 def video_call(doc_id):
-    user_id = session.get('user_id')  # user_id or None if not logged in
+    user_id = session.get('user_id')
     selected_date = None
     filtered_slots = []
     availability_summary = {}
 
     with get_db_connection() as conn:
         with conn.cursor(dictionary=True) as c:
+            # Get doctor info
+            c.execute("SELECT id, name, fees FROM users WHERE id = %s AND is_doctor = 1", (doc_id,))
+            doctor = c.fetchone()
+            if not doctor:
+                return "Doctor not found", 404
+
             now = datetime.utcnow()
             expire_time = now - RESERVATION_TIMEOUT
 
@@ -847,7 +854,7 @@ def video_call(doc_id):
             """, (expire_time,))
             conn.commit()
 
-            # Fetch all slots (including booked)
+            # Get availability
             c.execute("""
                 SELECT id, date, start_time, end_time, booked
                 FROM availability
@@ -864,20 +871,16 @@ def video_call(doc_id):
 
     if request.method == "POST":
         selected_date = request.form.get('date')
-
-        # Filter only free slots for dropdown
-        filtered_slots = []
         for (date, _), times in availability_summary.items():
             if date == selected_date:
                 filtered_slots = [ (start, end, slot_id) for (start, end, slot_id, booked) in times if booked == 0 ]
                 break
 
     return render_template(
-        'video_call.html',availability_summary=availability_summary,selected_date=selected_date,
+        'video_call.html',doctor=doctor,availability_summary=availability_summary,selected_date=selected_date,
         filtered_slots=filtered_slots,doctor_id=doc_id,current_user_id=user_id)
 
 
-    
 @app.route('/book/<int:slot_id>', methods=['POST'])
 def book_appointment(slot_id):
     user_id = session.get('user_id')
@@ -1058,6 +1061,7 @@ def doctor_dashboard():
                     specialization = request.form.get('specialization') or doctor['specialization']
                     experience = int(request.form.get('experience') or doctor['experience'])
                     description = request.form.get('description') or doctor['description']
+                    fees = request.form.get('fees') or doctor['fees']
 
                     if not name.strip():
                         flash("Name cannot be empty.")
@@ -1073,8 +1077,8 @@ def doctor_dashboard():
 
                         c.execute("""
                             UPDATE users
-                            SET name=%s, specialization=%s, description=%s, experience=%s, image=%s WHERE id=%s
-                        """, (name, specialization, description,experience, image_filename, doctor_id))
+                            SET name=%s, specialization=%s, description=%s, experience=%s, fees=%s, image=%s WHERE id=%s
+                        """, (name, specialization, description,experience, fees,image_filename, doctor_id))
                         conn.commit()
                         flash("Profile updated successfully!")
 
