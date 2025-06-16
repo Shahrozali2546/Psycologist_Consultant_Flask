@@ -18,7 +18,7 @@
   <div class="card mb-4 shadow-sm p-5">
     <div class="row align-items-start">
       
-      <!-- Left Column: Image + Reviews -->
+      <!-- Left Column: Image + Reviews + Fees -->
       <div class="col-md-3 text-center">
         {% if doctor.image %}
           <img src="{{ url_for('static', filename='uploads/' ~ doctor.image) }}" 
@@ -31,58 +31,56 @@
           </div>
         {% endif %}
         
-        
+        <!-- Fees Block Video Consultation -->
+        <div class="mt-3" style="border: 2px solid #89E894; border-radius: 15px; padding: 20px;  width: 350px; text-align: left; ">
+          <p class="mb-3" style="font-weight: bold; font-size: 15px; color: #0d6efd;">Video Consultation</p>
+          <p class="mb-0" style="font-size: 15px; font-weight: bold; ">Rs. {{ doctor.fees }}</p>
+        </div>
       </div>
 
-<!-- Middle Column: Name, Specialization, Reviews, Experience, Satisfaction side-by-side -->
-<div class="col-md-6 d-flex flex-column justify-content-between">
-  <div>
-    <h5 class="mb-2">
-      {{ doctor.name if doctor.name else 'No Name' }}
-    </h5>
+      <!-- Middle Column: Name, Specialization, Reviews, Experience, Satisfaction side-by-side -->
+      <div class="col-md-6 d-flex flex-column justify-content-between">
+        <div>
+          <h5 class="mb-2">
+            {{ doctor.name if doctor.name else 'No Name' }}
+          </h5>
 
-    <p class="text-muted mb-4">
-      <strong>Specialization:</strong> {{ doctor.specialization if doctor.specialization else 'Not specified' }}
-    </p>
-  </div>
+          <p class="text-muted mb-4">
+            <strong>Specialization:</strong> {{ doctor.specialization if doctor.specialization else 'Not specified' }}
+          </p>
+        </div>
 
-  <!-- Reviews, Experience & Satisfaction side by side -->
-  <div class="d-flex justify-content-between  pt-3">
-    <!-- Reviews -->
-   <div class="text-center">
-  <p class="mb-1 text-success">Reviews</p>
-  <div class="d-flex align-items-center justify-content-center gap-2 text-primary fs-7">
-    <i class="bi bi-hand-thumbs-up-fill"></i>
-    <span>{{ doctor.review_count }}</span>
-  </div>
-</div>
-
-
-
-    <!-- Experience -->
-    <div class="text-center">
-      <p class="mb-1">Experience</p>
-      <h6>{{ doctor.experience }} Yrs</h6>
-    </div>
-
-    <!-- Satisfaction -->
-    <div class="text-center">
-      <p class="mb-1">Satisfaction</p>
-      <h6>{{ doctor.satisfaction_percent }}%</h6>
-    </div>
-  </div>
-</div>
-
+        <!-- Reviews, Experience & Satisfaction side by side -->
+        <div class="d-flex justify-content-between pt-3">
+          <!-- Reviews -->
+          <div class="text-center">
+            <p class="mb-1 text-success">Reviews</p>
+            <div class="d-flex align-items-center justify-content-center gap-2 text-primary fs-7">
+              <i class="bi bi-hand-thumbs-up-fill"></i>
+              <span>{{ doctor.review_count }}</span>
+            </div>
+          </div>
+          <!-- Experience -->
+          <div class="text-center">
+            <p class="mb-1">Experience</p>
+            <h6>{{ doctor.experience }} Yrs</h6>
+          </div>
+          <!-- Satisfaction -->
+          <div class="text-center">
+            <p class="mb-1">Satisfaction</p>
+            <h6>{{ doctor.satisfaction_percent }}%</h6>
+          </div>
+        </div>
+      </div>
 
       <!-- Right Column: Buttons -->
-      <div class="col-md-3 text-end d-flex flex-column justify-content-start">
+      <div class="col-md-3 d-flex flex-column justify-content-start align-items-end">
         <a href="/doctor/{{ doctor.id }}" class="btn btn-primary mb-2 w-100">View Profile</a>
         <a href="/video-call/{{ doctor.id }}" class="btn btn-outline-success w-100">Video Call</a>
       </div>
     </div>
   </div>
   {% endfor %}
-
 </div>
 
 {% endblock %}
