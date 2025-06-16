@@ -11,26 +11,26 @@
     </a>
 
     <!-- Blog Title -->
-    <h1 style="font-size: 36px; color: #222; margin-bottom: 10px;">{{ blog[1] }}</h1>
+    <h1 style="font-size: 36px; color: #222; margin-bottom: 10px;">{{ blog['title'] }}</h1>
 
     <!-- Author and Date -->
     <p style="color: #666; font-size: 15px; margin: 0 0 25px;">
-        ✍️ <strong>{{ blog[3] }}</strong> ({{ blog[4] }})<br>
-        📅 <em>{{ blog[7] }}</em>
+        ✍️ <strong>{{ blog['author'] }}</strong><br>
+        📅 <em>{{ blog['created_at'] }}</em>
     </p>
 
     <!-- Blog Image -->
-    {% if blog[5] %}
+    {% if blog['image'] %}
     <div style="text-align: center; margin-bottom: 35px;">
-        <img src="{{ url_for('static', filename='uploads/' + blog[5]) }}" 
+        <img src="{{ url_for('static', filename='uploads/' + blog['image']) }}" 
              alt="Blog Image"
              style="width: 100%; max-height: 500px; object-fit: cover; border-radius: 8px;">
     </div>
     {% endif %}
 
     <!-- Blog Content -->
-    <div style="font-size: 18px; line-height: 1.9; color: #333; white-space: pre-line;">
-        {{ blog[2] }}
+    <div style="font-size: 18px; line-height: 1.9; color: #333;">
+         {{ blog['content']|safe }}
     </div>
 
 </div>

@@ -16,31 +16,67 @@
 
   {% for doctor in doctors %}
   <div class="card mb-4 shadow-sm p-5">
-    <div class="row align-items-center">
-      <!-- Doctor Image -->
-      <div class="col-md-2 text-center">
+    <div class="row align-items-start">
+      
+      <!-- Left Column: Image + Reviews -->
+      <div class="col-md-3 text-center">
         {% if doctor.image %}
-          <img src="{{ url_for('static', filename='uploads/' ~ doctor.image) }}" class="rounded-circle img-fluid" style="width: 150px; height: 150px; object-fit: cover;">
+          <img src="{{ url_for('static', filename='uploads/' ~ doctor.image) }}" 
+               class="rounded-circle img-fluid mb-3" 
+               style="width: 200px; height: 200px; object-fit: cover;">
         {% else %}
-          <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+          <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center mb-3" 
+               style="width: 150px; height: 150px;">
             No Image
           </div>
         {% endif %}
+        
+        
       </div>
 
-      <!-- Doctor Info -->
-      <div class="col-md-7">
-        <h5 class="mb-1">
-          {{ doctor.name if doctor.name else 'No Name' }}
-        </h5>
-        <p class="text-muted mb-0">
-          <strong>Specialization:</strong> {{ doctor.specialization if doctor.specialization else 'Not specified' }}
-        </p>
-      </div>
+<!-- Middle Column: Name, Specialization, Reviews, Experience, Satisfaction side-by-side -->
+<div class="col-md-6 d-flex flex-column justify-content-between">
+  <div>
+    <h5 class="mb-2">
+      {{ doctor.name if doctor.name else 'No Name' }}
+    </h5>
 
-      <!-- Buttons -->
-      <div class="col-md-3 text-end">
-        <a href="/doctor/{{ doctor.id }}" class="btn btn-primary mb-2 w-100">View profile</a>
+    <p class="text-muted mb-4">
+      <strong>Specialization:</strong> {{ doctor.specialization if doctor.specialization else 'Not specified' }}
+    </p>
+  </div>
+
+  <!-- Reviews, Experience & Satisfaction side by side -->
+  <div class="d-flex justify-content-between  pt-3">
+    <!-- Reviews -->
+   <div class="text-center">
+  <p class="mb-1 text-success">Reviews</p>
+  <div class="d-flex align-items-center justify-content-center gap-2 text-primary fs-7">
+    <i class="bi bi-hand-thumbs-up-fill"></i>
+    <span>{{ doctor.review_count }}</span>
+  </div>
+</div>
+
+
+
+    <!-- Experience -->
+    <div class="text-center">
+      <p class="mb-1">Experience</p>
+      <h6>{{ doctor.experience }} Yrs</h6>
+    </div>
+
+    <!-- Satisfaction -->
+    <div class="text-center">
+      <p class="mb-1">Satisfaction</p>
+      <h6>{{ doctor.satisfaction_percent }}%</h6>
+    </div>
+  </div>
+</div>
+
+
+      <!-- Right Column: Buttons -->
+      <div class="col-md-3 text-end d-flex flex-column justify-content-start">
+        <a href="/doctor/{{ doctor.id }}" class="btn btn-primary mb-2 w-100">View Profile</a>
         <a href="/video-call/{{ doctor.id }}" class="btn btn-outline-success w-100">Video Call</a>
       </div>
     </div>

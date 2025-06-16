@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+
 <div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
   <div class="card p-4 shadow-lg" style="width: 100%; max-width: 500px; border-radius: 12px;">
     <div class="text-center mb-4">
@@ -12,14 +13,15 @@
         <label for="title" class="form-label fw-semibold">Title</label>
         <input type="text" class="form-control form-control-lg" id="title" name="title" placeholder="Blog title here" required>
       </div>
-     <div class="mb-3">
+
+      <div class="mb-3">
         <label for="author" class="form-label fw-semibold">Author</label>
         <input type="text" id="author" name="author" class="form-control" placeholder="Enter your name" required>
-        </div>
+      </div>
 
       <div class="mb-3">
         <label for="content" class="form-label fw-semibold">Content</label>
-        <textarea class="form-control" id="content" name="content" rows="6" placeholder="Write your blog content..." required></textarea>
+        <textarea class="form-control" id="content-editor" name="content" rows="6" placeholder="Write your blog content..." required></textarea>
       </div>
 
       <div class="mb-4">
@@ -34,6 +36,19 @@
   </div>
 </div>
 
+<!-- TinyMCE Script -->
+<script src="https://cdn.tiny.cloud/1/4d2twv7yl7dupskqrn0xz5dotzgogdt3ciatl5j9et2slnae/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+  tinymce.init({
+    selector: '#content-editor',
+    menubar: false,
+    plugins: 'lists link image preview code',
+    toolbar: 'undo redo | bold italic underline | bullist numlist | link image | code preview',
+    branding: false,
+    height: 300
+  });
+</script>
+
 <style>
   .btn-gradient {
     background: linear-gradient(45deg, #4a90e2, #007bff);
@@ -46,4 +61,5 @@
     color: white;
   }
 </style>
+
 {% endblock %}

@@ -7,35 +7,72 @@
       <h4>Edit Blog Post</h4>
     </div>
     <div class="card-body">
+
       <form method="post" enctype="multipart/form-data" class="mt-3">
 
+        <!-- Title Input -->
         <div class="mb-3">
           <label class="form-label">Title</label>
-          <input type="text" name="title" class="form-control" value="{{ blog[1] }}" required>
+          <input type="text" name="title" class="form-control" value="{{ blog.title }}" required>
         </div>
 
+        <!-- Content Textarea -->
         <div class="mb-3">
           <label class="form-label">Content</label>
-          <textarea name="content" class="form-control" rows="8" required>{{ blog[2] }}</textarea>
+          <textarea name="content" class="form-control" id="content-editor" rows="8" required>{{ blog.content }}</textarea>
         </div>
 
+        <!-- Current Image -->
         <div class="mb-3">
           <label class="form-label">Current Image</label><br>
-          <img src="{{ url_for('static', filename='uploads/' + blog[5]) }}" width="250" class="img-thumbnail">
+          <img src="{{ url_for('static', filename='uploads/' + blog.image) }}" width="250" class="img-thumbnail">
         </div>
 
+        <!-- Optional Image Upload -->
         <div class="mb-3">
           <label class="form-label">Change Image (optional)</label>
           <input type="file" name="image" class="form-control">
         </div>
 
+        <!-- Submit / Cancel Buttons -->
         <div class="d-flex gap-2">
           <button type="submit" class="btn btn-primary">Update Blog</button>
           <a href="{{ url_for('blog') }}" class="btn btn-secondary">Cancel</a>
         </div>
+
       </form>
+
     </div>
   </div>
 </div>
+
+
+<!-- TinyMCE Script -->
+<script src="https://cdn.tiny.cloud/1/4d2twv7yl7dupskqrn0xz5dotzgogdt3ciatl5j9et2slnae/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+  tinymce.init({
+    selector: '#content-editor',
+    menubar: false,
+    plugins: 'lists link image preview code',
+    toolbar: 'undo redo | bold italic underline | bullist numlist | link image | code preview',
+    branding: false,
+    height: 300
+  });
+</script>
+
+<style>
+  .btn-gradient {
+    background: linear-gradient(45deg, #4a90e2, #007bff);
+    color: white;
+    border: none;
+    transition: background 0.3s ease;
+  }
+  .btn-gradient:hover {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+  }
+</style>
+
+
 
 {% endblock %}

@@ -41,8 +41,7 @@ migrations/
 logs/
 
 # Static image uploads (optional - you already included)
-static/images/
-static/uploads/
+
 
 # VS Code and JetBrains IDEs
 .vscode/

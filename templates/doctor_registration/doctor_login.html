@@ -4,7 +4,14 @@
 <div class="container my-5" style="max-width: 400px;">
     <div class="card shadow">
         <div class="card-body">
-            <h2 class="card-title text-center mb-4">Doctor Login</h2>
+
+            <h2 class="card-title text-center mb-3">Doctor Login</h2>
+
+            <!-- Logo -->
+            <div class="text-center mb-4">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" style="max-height: 80px;">
+            </div>
+
 
             <form method="POST">
                 <div class="mb-3">
@@ -19,9 +26,12 @@
 
                 <button type="submit" class="btn btn-primary w-100">Login</button>
             </form>
-             <div class="text-center mt-3">
-        <small>Don't have an account? <a href="/doctor/signup">Create one</a></small>
-      </div>
+
+            <!-- Extra Links -->
+            <div class="text-center mt-3">
+                <small>Don't have an account? <a href="/doctor/signup">Create one</a></small><br>
+                <small><a href="/forgot-password">Forgot Password?</a></small>
+            </div>
         </div>
     </div>
 </div>

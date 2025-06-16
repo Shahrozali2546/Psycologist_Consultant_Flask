@@ -16,6 +16,7 @@
             Dashboard
           </a>
         </li>
+        
         <li class="nav-item">
           <a href="{{ url_for('doctor_slot_view') }}" class="nav-link {% if request.endpoint == 'doctor_slot_view' %}active{% else %}text-white{% endif %}">
             Slot View 
@@ -36,7 +37,6 @@
             Create Blogs
           </a>
         </li>
-        
         <li>
           <a href="{{ url_for('logout') }}" class="nav-link text-white">
             Logout

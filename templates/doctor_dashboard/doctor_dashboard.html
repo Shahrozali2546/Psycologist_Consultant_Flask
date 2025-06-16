@@ -9,37 +9,90 @@
   </div>
 
 
+<div class="card mb-4 shadow-sm p-4">
+  <h4>Update Profile</h4>
+  <form method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="form_type" value="update_profile">
 
-  <!-- Profile Update Form -->
-  <div class="card mb-4 shadow-sm">
-    <div class="card-header bg-primary text-white fw-semibold">👤 Update Profile</div>
-    <div class="card-body">
-      <form method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="form_type" value="update_profile">
-        <div class="mb-3">
-          <label class="form-label">Name</label>
-          <input type="text" name="name" class="form-control" value="{{ doctor.name or '' }}" required>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Specialization</label>
-          <input type="text" name="specialization" class="form-control" value="{{ doctor.specialization or '' }}" required>
-        </div>
-  <div class="mb-3">
-  <label class="form-label fs-5">About Me</label>
-  <textarea name="description" class="form-control" rows="6">{{ doctor.description or '' }}</textarea>
-</div>
-
-
-        <div class="mb-3">
-          <label class="form-label">Profile Image</label>
-          <input type="file" name="image" class="form-control">
-        </div>
-        <div class="text-end">
-          <button class="btn btn-primary px-4">💾 Update Profile</button>
-        </div>
-      </form>
+    <div class="mb-3">
+      <label class="form-label">Name</label>
+      <input type="text" name="name" class="form-control" value="{{ doctor.name or '' }}" required>
     </div>
-  </div>
+
+    <div class="mb-3">
+      <label class="form-label">Specialization</label>
+      <input type="text" name="specialization" class="form-control" value="{{ doctor.specialization or '' }}" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">University</label>
+      <input type="text" name="specialization" class="form-control" value="{{ doctor.university or '' }}" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Experience (in years)</label>
+      <input type="number" name="experience" class="form-control" value="{{ doctor.experience or '' }}" min="0" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">About Me</label>
+      <textarea name="description" id="content-editor" class="form-control" rows="4">{{ doctor.description or '' }}</textarea>
+    </div>
+
+
+    <div class="mb-3">
+      <label class="form-label">Profile Image</label>
+      <input type="file" name="image" class="form-control">
+    </div>
+
+
+
+
+    
+    <button type="submit" class="btn btn-primary">Update Profile</button>
+  </form>
 </div>
+
+
+{% if reviews %}
+<div>
+  <h4>Reviews</h4>
+  <ul>
+    {% for review in reviews %}
+      <li><strong>{{ review.patient_name }}:</strong> {{ review.comment }} <em>({{ review.created_at }})</em></li>
+    {% endfor %}
+  </ul>
+</div>
+
+
+{% endif %}
+
+
+<!-- TinyMCE Script -->
+<script src="https://cdn.tiny.cloud/1/4d2twv7yl7dupskqrn0xz5dotzgogdt3ciatl5j9et2slnae/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+  tinymce.init({
+    selector: '#content-editor',
+    menubar: false,
+    plugins: 'lists link image preview code',
+    toolbar: 'undo redo | bold italic underline | bullist numlist | link image | code preview',
+    branding: false,
+    height: 300
+  });
+</script>
+
+<style>
+  .btn-gradient {
+    background: linear-gradient(45deg, #4a90e2, #007bff);
+    color: white;
+    border: none;
+    transition: background 0.3s ease;
+  }
+  .btn-gradient:hover {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+  }
+</style>
+
 
 {% endblock %}

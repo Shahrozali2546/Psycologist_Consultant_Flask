@@ -35,4 +35,32 @@
   </div>
 </div>
 
+<!-- TinyMCE Script -->
+<script src="https://cdn.tiny.cloud/1/4d2twv7yl7dupskqrn0xz5dotzgogdt3ciatl5j9et2slnae/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+  tinymce.init({
+    selector: '#content',
+    menubar: false,
+    plugins: 'lists link image preview code',
+    toolbar: 'undo redo | bold italic underline | bullist numlist | link image | code preview',
+    branding: false,
+    height: 300
+  });
+</script>
+
+<style>
+  .btn-gradient {
+    background: linear-gradient(45deg, #4a90e2, #007bff);
+    color: white;
+    border: none;
+    transition: background 0.3s ease;
+  }
+  .btn-gradient:hover {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+  }
+</style>
+
+
+
 {% endblock %}

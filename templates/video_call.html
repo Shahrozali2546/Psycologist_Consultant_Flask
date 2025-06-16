@@ -1,56 +1,97 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-  <div class=" p-5 rounded shadow " style="max-width: 800px; width: 100%; min-height: 600px; background-color: #f0f4f4;">
+<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light ">
+  <div class=" p-5 rounded shadow my-5" style="max-width: 800px; width: 100%; min-height: 600px; background-color: #f0f4f4;">
 
     <h2 class="mb-5 text-dark">Get Confirmed Appointment Online</h2>
 
-    <!-- Doctor Availability with white bg and rounded corners -->
-    <div class="alert alert-success bg-white rounded mb-5 shadow-sm p-4">
-      <h5><i class="bi bi-calendar-check "></i> Video Consultation Availability</h5>
-      <ul class="mb-0">
-        {% for (date, day), times in availability_summary.items() %}
-          <li><strong>{{ day }} ({{ date }}):</strong>
-            {% for time in times %}
-              {{ time[0] }} to {{ time[1] }}{% if not loop.last %}, {% endif %}
-            {% endfor %}
-          </li>
-        {% endfor %}
-      </ul>
-    <p class="p-2">Online</p>
+
+<!-- Doctor Availability with white bg and rounded corners -->
+<div class="alert alert-success bg-white rounded mb-5 shadow-sm p-4">
+  <h5><i class="bi bi-calendar-check"></i> Video Consultation Availability</h5>
+  <ul class="mb-0">
+  {% for (date, day), times in availability_summary.items() %}
+  <li><strong>{{ day }} ({{ date }}):</strong>
+    {% set start_times = times | map(attribute=0) | list %}
+    {% set end_times = times | map(attribute=1) | list %}
+    {% set earliest_start = start_times | min %}
+    {% set latest_end = end_times | max %}
+    {{ earliest_start | to_12hour }} - {{ latest_end | to_12hour }}
+  </li>
+{% endfor %}
+
+  </ul>
+  <p class="p-2">Online</p>
+</div>
+
+<form method="POST" id="bookingForm" onsubmit="handleBooking(event)">
+  <!-- Date Dropdown -->
+  <label for="dateSelect" class="form-label fw-bold">Select Date</label>
+  <select name="date" id="dateSelect" class="form-select" required onchange="document.getElementById('bookingForm').submit();">
+    <option value="" disabled {% if not selected_date %}selected{% endif %}>Select Date</option>
+    {% for (date, day), times in availability_summary.items() %}
+      <option value="{{ date }}" {% if date == selected_date %}selected{% endif %}>{{ date }} ({{ day }})</option>
+    {% endfor %}
+  </select>
+
+    <!-- Time Slot Dropdown -->
+    <label for="timeSelect" class="form-label fw-bold mt-3">Select Time</label>
+    <select name="slot_id" id="timeSelect" class="form-select" required>
+      <option value="" disabled selected>Select Time</option>
+      {% for start_time, end_time, slot_id in filtered_slots %}
+        <option value="{{ slot_id }}">{{ start_time | to_12hour }} - {{ end_time | to_12hour }}</option>
+      {% endfor %}
+    </select>
+
+    <!-- Patient Info -->
+    <div class="row mb-3 mt-4">
+      <div class="col">
+        <label for="patient_name" class="form-label fw-bold">Patient Name</label>
+        <input type="text" name="patient_name" id="patient_name" placeholder="Add Patient Name" class="form-control" required>
+      </div>
+      <div class="col">
+        <label for="contact" class="form-label fw-bold">Contact Number</label>
+        <input type="text" name="contact" id="contact" placeholder="Add Phone Number" class="form-control" required>
+      </div>
     </div>
 
-    <!-- Booking Form -->
-    <form method="POST" action="{{ url_for('book_appointment', slot_id=0) }}" id="slotForm">
+{% if not current_user_id %}
+  <button type="button" class="btn btn-success w-100 fw-bold" onclick="window.location.href='/patient/login'">
+    Book Video Consultation
+  </button>
 
-      <div class="mb-4">
-        <label for="slot" class="form-label fw-bold">Select Date & Time</label>
-        <select name="slot_id" class="form-select"
-                onchange="document.getElementById('slotForm').action = '/book/' + this.value;">
-          {% for slot in slots %}
-            {% if slot['doctor_id'] != session.get('user_id') %}
-              <option value="{{ slot['id'] }}">{{ slot['date'] }} ({{ slot['start_time'] }} - {{ slot['end_time'] }})</option>
-            {% endif %}
-          {% endfor %}
-        </select>
-      </div>
+  
+    {% elif doctor_id == current_user_id %}
+      <button type="button" class="btn btn-success w-100 fw-bold" disabled>
+        Book Video Consultation
+      </button>
+    {% else %}
+      <button type="submit" class="btn btn-success w-100 fw-bold">
+        Book Video Consultation
+      </button>
+    {% endif %}
+</form>
 
-      <!-- Row with two inputs side by side -->
-      <div class="row mb-3">
-        <div class="col">
-          <label for="patient_name" class="form-label fw-bold">Patient Name</label>
-          <input type="text" name="patient_name" id="patient_name" placeholder="Add Patient Name" class="form-control" required>
-        </div>
-        <div class="col">
-          <label for="contact" class="form-label fw-bold">Contact Number</label>
-          <input type="text" name="contact" id="contact" placeholder="Add Phone Number" class="form-control" required>
-        </div>
-      </div>
 
-      <button type="submit" class="btn btn-success w-100 fw-bold">Book Video Consultation</button>
-    </form>
   </div>
 </div>
+
+<script>
+function handleBooking(event) {
+  event.preventDefault(); // prevent default form submission
+
+  const form = document.getElementById('bookingForm');
+  const slotId = document.getElementById('timeSelect').value;
+
+  if (!slotId) {
+    alert("Please select a time slot.");
+    return;
+  }
+
+  form.action = `/book/${slotId}`;
+  form.submit();
+}
+</script>
 
 {% endblock %}
